@@ -18,6 +18,8 @@ public class MainFrame extends JFrame {
         setIconImage(webIcon.getImage());
 
         JButton makeBtn = new JButton("Make");
+        makeBtn.setHorizontalAlignment(JLabel.CENTER);
+        makeBtn.setVerticalAlignment(JLabel.CENTER);
 
         slider = new JSlider(1, 5, 1);
         slider.setMajorTickSpacing(1);
@@ -33,18 +35,25 @@ public class MainFrame extends JFrame {
         JCheckBox cbMul = new JCheckBox("Умножение", true);
         JCheckBox cbDiv = new JCheckBox("Деление", true);
 
+        SpinnerModel spinnerModel = new SpinnerNumberModel(10, 1, 40, 1);
+        JSpinner spinNTasks = new JSpinner(spinnerModel);
+
         lbl = new JLabel("...");
-        createLayout(new JLabel("Сложность: "),
+        createLayout(new JLabel("Выберите сложность: "),
                 slider,
                 lbl,
                 makeBtn,
                 cbPlus,
                 cbMinus,
                 cbMul,
-                cbDiv);
+                cbDiv,
+                new JLabel("Выберите действия:"),
+                spinNTasks,
+                new JLabel("Выберите количество примеров:")
+        );
 
         setTitle("Устный счет");
-        setSize(300, 200);
+        setSize(400, 220);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -58,13 +67,23 @@ public class MainFrame extends JFrame {
         gl.setAutoCreateContainerGaps(true);
         gl.setAutoCreateGaps(true);
 
+        JPanel sep = new JPanel();
+
         gl.setHorizontalGroup(gl.createParallelGroup()
+                .addGroup(gl.createSequentialGroup()
+                        .addComponent(arg[10])
+                        .addComponent(arg[9])
+                        .addGap(100)
+                )
+                .addComponent(sep)
+                .addComponent(arg[8])
                 .addGroup(gl.createSequentialGroup()
                         .addComponent(arg[4])
                         .addComponent(arg[5])
                         .addComponent(arg[6])
                         .addComponent(arg[7])
                 )
+                .addComponent(sep)
                 .addGroup(gl.createSequentialGroup()
                         .addComponent(arg[0])
                         .addComponent(arg[1])
@@ -75,11 +94,18 @@ public class MainFrame extends JFrame {
 
         gl.setVerticalGroup(gl.createSequentialGroup()
                 .addGroup(gl.createParallelGroup()
+                        .addComponent(arg[10])
+                        .addComponent(arg[9])
+                )
+                .addComponent(sep)
+                .addComponent(arg[8])
+                .addGroup(gl.createParallelGroup()
                         .addComponent(arg[4])
                         .addComponent(arg[5])
                         .addComponent(arg[6])
                         .addComponent(arg[7])
                 )
+                .addComponent(sep)
                 .addGroup(gl.createParallelGroup()
                         .addComponent(arg[0])
                         .addComponent(arg[1])
