@@ -138,20 +138,8 @@ public class GenTask {
         }
         Random random = new Random();
         int whatsHarder = random.nextInt(2);
-        switch (whatsHarder){
-            case 0:
-                result[0] = availNums1.get(random.nextInt(availNums1.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                result[1] = availNums2.get(random.nextInt(availNums2.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                break;
-            case 1:
-                result[1] = availNums1.get(random.nextInt(availNums1.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                result[0] = availNums2.get(random.nextInt(availNums2.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                break;
-            default:
-                result[0] = availNums1.get(random.nextInt(availNums1.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                result[1] = availNums2.get(random.nextInt(availNums2.size())) * availAdds.get(random.nextInt(availAdds.size()));
-                break;
-        }
+        result[whatsHarder] = availNums1.get(random.nextInt(availNums1.size())) * availAdds.get(random.nextInt(availAdds.size()));
+        result[1 - whatsHarder] = availNums2.get(random.nextInt(availNums2.size())) * availAdds.get(random.nextInt(availAdds.size()));
         result[2] = result[0] * result[1];
         return result;
     }
