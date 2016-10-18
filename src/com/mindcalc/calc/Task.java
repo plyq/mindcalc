@@ -36,7 +36,7 @@ public class Task {
         this.difficulty = difficulty;
     }
 
-    public String ToString(){
+    public String toString(){
         String output = "";
         output += DoubleOut.clean(n1);
         output += " ";
@@ -58,7 +58,6 @@ public class Task {
                 break;
         }
         output += DoubleOut.clean(n2);
-        output += " = ";
         return output;
     }
 

@@ -15,6 +15,6 @@ public class Test {
             output = GenTask.GenTwoNumbersForDiv(i);
             System.out.println("Level "+i+": "+output[0]+" / "+output[1]+" =");
         }
-        System.out.println(DoubleOut.clean(12000.23000000004));
+        System.out.println(DoubleOut.clean(new Double(12000.23000000004)));
     }
 }

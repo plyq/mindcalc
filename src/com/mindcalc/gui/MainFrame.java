@@ -1,13 +1,25 @@
 package com.mindcalc.gui;
 
+import com.mindcalc.calc.Signs;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
-    private JSlider slider;
-    private JLabel lbl;
+    private JSlider slider = new JSlider(1, 5, 1);
+    private JLabel lbl = new JLabel("...");
+    private JCheckBox cbPlus = new JCheckBox("Сложение", true);
+    private JCheckBox cbMinus = new JCheckBox("Вычитание", true);
+    private JCheckBox cbMul = new JCheckBox("Умножение", true);
+    private JCheckBox cbDiv = new JCheckBox("Деление", true);
+    private SpinnerModel spinnerModel = new SpinnerNumberModel(10, 1, 40, 1);
+    private JSpinner spinNTasks = new JSpinner(spinnerModel);
+
 
     public MainFrame() {
         initUI();
@@ -18,10 +30,26 @@ public class MainFrame extends JFrame {
         setIconImage(webIcon.getImage());
 
         JButton makeBtn = new JButton("Make");
-        makeBtn.setHorizontalAlignment(JLabel.CENTER);
-        makeBtn.setVerticalAlignment(JLabel.CENTER);
+        makeBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int numOfTasks = (int) spinNTasks.getValue();
 
-        slider = new JSlider(1, 5, 1);
+                ArrayList<Signs> signs = new ArrayList<Signs>();
+                if (cbPlus.isSelected()) signs.add(Signs.PLUS);
+                if (cbMinus.isSelected()) signs.add(Signs.MINUS);
+                if (cbMul.isSelected()) signs.add(Signs.MUL);
+                if (cbDiv.isSelected()) signs.add(Signs.DIV);
+
+                int difficulty = slider.getValue();
+
+                EventQueue.invokeLater(() -> {
+                    OutFrame frame = new OutFrame(numOfTasks, signs, difficulty);
+                    frame.setVisible(true);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                });
+            }
+        });
+
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
 
@@ -30,15 +58,6 @@ public class MainFrame extends JFrame {
             lbl.setText(Integer.toString(value));
         });
 
-        JCheckBox cbPlus = new JCheckBox("Сложение", true);
-        JCheckBox cbMinus = new JCheckBox("Вычитание", true);
-        JCheckBox cbMul = new JCheckBox("Умножение", true);
-        JCheckBox cbDiv = new JCheckBox("Деление", true);
-
-        SpinnerModel spinnerModel = new SpinnerNumberModel(10, 1, 40, 1);
-        JSpinner spinNTasks = new JSpinner(spinnerModel);
-
-        lbl = new JLabel("...");
         createLayout(new JLabel("Выберите сложность: "),
                 slider,
                 lbl,
@@ -57,6 +76,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
+
 
     private void createLayout(JComponent... arg) {
 
@@ -113,8 +133,6 @@ public class MainFrame extends JFrame {
                 )
                 .addComponent(arg[3])
         );
-
-        gl.linkSize(arg[0]);
 
         pack();
     }

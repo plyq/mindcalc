@@ -16,14 +16,28 @@ public class UserQuery {
         this.signs = signs;
     }
 
-    public ArrayList<Task> make(){
-        ArrayList<Task> listOfTasks = new ArrayList<Task>();
-        for (Signs sign :
-                this.signs) {
-            for (int i = 0; i < numOfTasks; i++) {
-                listOfTasks.add(new Task(sign, difficulty));
+    public String make(){
+        String text = "<html>\n";
+        text += "<table>\n";
+        for (int i = 0; i < numOfTasks; i++)
+        {
+            text += "<tr>\n";
+            int counter = 0;
+            for (Signs sign :
+                    signs) {
+                text += "<td>";
+                text += (counter * numOfTasks + i + 1);
+                text += ".</td><td>";
+                Task tempTask = new Task(sign, difficulty);
+                text += tempTask;
+                text += "</td><td>=</td><td>";
+                text += tempTask.getResult();
+                text += "</td><td>  </td>\n";
+                counter += 1;
             }
+            text += "</tr>\n";
         }
-        return listOfTasks;
+        text += "</table>\n";
+        return text;
     }
 }

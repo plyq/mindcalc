@@ -1,5 +1,7 @@
 package com.mindcalc.tools;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 /**
@@ -7,15 +9,24 @@ import java.util.Locale;
  */
 public class DoubleOut {
     public static String clean(double d){
-        double dAfterBug = Double.parseDouble(String.format(Locale.ENGLISH, "%(.8f", d));
-        int leftPart = (int) dAfterBug;
-        dAfterBug -= leftPart;
-        int rightPart = 0;
-        while (dAfterBug > 0){
-            int temp = (int) (10.0 * dAfterBug);
-            rightPart = rightPart * 10 + temp;
-            dAfterBug -= temp;
+        NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
+        Number number = null;
+        try {
+            number = format.parse(String.format(Locale.getDefault(), "%.8f%n", d));
+        } catch (ParseException e) {
+            System.out.println("smth go wrong");
         }
-        return leftPart + "," + rightPart;
+        double dAfterBug = number.doubleValue();
+        String lol = String.valueOf(dAfterBug);
+
+        lol = lol.replace('.','~');
+        int rightPart = Integer.parseInt(lol.split("~")[1]);
+        int leftPart = Integer.parseInt(lol.split("~")[0]);
+        if (rightPart > 0){
+            return leftPart + "," + rightPart;
+        } else {
+            return "" + leftPart;
+        }
+
     }
 }
