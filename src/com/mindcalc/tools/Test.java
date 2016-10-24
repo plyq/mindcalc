@@ -16,5 +16,7 @@ public class Test {
             System.out.println("Level "+i+": "+output[0]+" / "+output[1]+" =");
         }
         System.out.println(DoubleOut.clean(new Double(12000.23000000004)));
+        boolean f = (0==0.0);
+        System.out.println(f);
     }
 }

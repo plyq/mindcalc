@@ -146,6 +146,9 @@ public class GenTask {
 
     public static double[] GenTwoNumbersForDiv(int difficulty){
         double[] temp = GenTwoNumbersForMul(difficulty);
+        while (temp[2]==0 && temp[1]==0){
+            temp = GenTwoNumbersForMul(difficulty);
+        }
         double[] result = {
                 temp[2],
                 temp[1],

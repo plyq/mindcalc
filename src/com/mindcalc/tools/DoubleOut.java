@@ -20,13 +20,41 @@ public class DoubleOut {
         String lol = String.valueOf(dAfterBug);
 
         lol = lol.replace('.','~');
-        int rightPart = Integer.parseInt(lol.split("~")[1]);
-        int leftPart = Integer.parseInt(lol.split("~")[0]);
+        String rightpartStr = lol.split("~")[1];
+        String leftpartStr = lol.split("~")[0];
+
+        long rightPart;
+        long leftPart;
+        leftPart = Long.parseLong(leftpartStr);
+        try{
+            rightPart = Long.parseLong(rightpartStr);
+        } catch (NumberFormatException e) {
+            int tempBeforeE = Integer.parseInt(rightpartStr.split("E")[0]);
+            int tempAfterE = Integer.parseInt(rightpartStr.split("E")[1]);
+            int digits=0;
+            int tempBeforeECopy = tempBeforeE;
+            while (tempBeforeECopy > 0){
+                digits += 1;
+                tempBeforeECopy = tempBeforeECopy / 10;
+            }
+            for (int i = 0; i < digits; i++) {
+                leftPart *= 10;
+            }
+            leftPart += tempBeforeE;
+            for (int i = 0; i < (tempAfterE-digits); i++) {
+                leftPart *= 10;
+            }
+            rightPart = 0;
+            rightpartStr = String.valueOf(rightPart);
+            leftpartStr = String.valueOf(leftPart);
+        }
+
         if (rightPart > 0){
-            return leftPart + "," + rightPart;
+            return leftpartStr + "," + rightpartStr;
         } else {
-            return "" + leftPart;
+            return "" + leftpartStr;
         }
 
     }
+
 }

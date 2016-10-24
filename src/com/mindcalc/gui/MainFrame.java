@@ -17,8 +17,10 @@ public class MainFrame extends JFrame {
     private JCheckBox cbMinus = new JCheckBox("Вычитание", true);
     private JCheckBox cbMul = new JCheckBox("Умножение", true);
     private JCheckBox cbDiv = new JCheckBox("Деление", true);
-    private SpinnerModel spinnerModel = new SpinnerNumberModel(10, 1, 40, 1);
-    private JSpinner spinNTasks = new JSpinner(spinnerModel);
+    private SpinnerModel spinnerModelTasks = new SpinnerNumberModel(10, 1, 40, 1);
+    private JSpinner spinNTasks = new JSpinner(spinnerModelTasks);
+    private SpinnerModel spinnerModelVars = new SpinnerNumberModel(2, 1, 40, 1);
+    private JSpinner spinNVars = new JSpinner(spinnerModelVars);
 
 
     public MainFrame() {
@@ -29,10 +31,11 @@ public class MainFrame extends JFrame {
         ImageIcon webIcon = new ImageIcon("icon.png");
         setIconImage(webIcon.getImage());
 
-        JButton makeBtn = new JButton("Make");
+        JButton makeBtn = new JButton("Создать");
         makeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int numOfTasks = (int) spinNTasks.getValue();
+                int numOfVars = (int) spinNVars.getValue();
 
                 ArrayList<Signs> signs = new ArrayList<Signs>();
                 if (cbPlus.isSelected()) signs.add(Signs.PLUS);
@@ -43,7 +46,7 @@ public class MainFrame extends JFrame {
                 int difficulty = slider.getValue();
 
                 EventQueue.invokeLater(() -> {
-                    OutFrame frame = new OutFrame(numOfTasks, signs, difficulty);
+                    OutFrame frame = new OutFrame(numOfTasks, signs, difficulty, numOfVars);
                     frame.setVisible(true);
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 });
@@ -68,11 +71,13 @@ public class MainFrame extends JFrame {
                 cbDiv,
                 new JLabel("Выберите действия:"),
                 spinNTasks,
-                new JLabel("Выберите количество примеров:")
+                new JLabel("Выберите количество примеров:"),
+                spinNVars,
+                new JLabel("Выберите количество вариантов:")
         );
 
         setTitle("Устный счет");
-        setSize(400, 220);
+        setSize(400, 260);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -109,7 +114,12 @@ public class MainFrame extends JFrame {
                         .addComponent(arg[1])
                         .addComponent(arg[2])
                 )
-                .addComponent(arg[3])
+                .addGroup(gl.createSequentialGroup()
+                        .addComponent(arg[12])
+                        .addComponent(arg[11])
+                        .addGap(100)
+                )
+                .addComponent(arg[3], GroupLayout.Alignment.CENTER)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
@@ -130,6 +140,10 @@ public class MainFrame extends JFrame {
                         .addComponent(arg[0])
                         .addComponent(arg[1])
                         .addComponent(arg[2])
+                )
+                .addGroup(gl.createParallelGroup()
+                        .addComponent(arg[12])
+                        .addComponent(arg[11])
                 )
                 .addComponent(arg[3])
         );
